@@ -1,0 +1,263 @@
+
+<script>
+    let dadosSalvos = []
+    window.api.enviarDados((data) => {
+        console.log(data)
+        dadosSalvos = data[0];
+        console.log(dadosSalvos)
+        
+    })
+
+</script>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Memorial de Cálculo - Armadura Longitudinal</title>
+    <link rel="stylesheet" href="../../bootstrap/bootstrap.css">
+</head>
+
+<body>
+    <h2 class='h5 text-center'id="titulocalculos">Metodologia para realizar o dimensionamento:</h2>
+    <div class="accordion" id="accordionDFNS">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Passo 1: Parâmetros do diagrama retangular
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionDFNS">
+                <div class="accordion-body">
+                    <div class="mb-4" id="textp1"></div>
+                    <div class="row">
+                        <div class="col-1 col-sm-auto">&#955&nbsp&nbsp</div>
+                        <div class="col-1 col-sm-auto igual">=</div>
+                        <div class="col-10 col-sm-auto" id="p1lambda"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1 col-sm-auto">&#945<sub>c</sub></div>
+                        <div class="col-1 col-sm-auto igual">=</div>
+                        <div class="col-10 col-sm-auto" id="p1alfac"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1 col-sm-auto">&#958<sub>lim</sub></div>
+                        <div class="col-1 col-sm-auto igual">=</div>
+                        <div class="col-6 col-sm-auto" id="p1xi"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1 col-sm-auto">&#958<sub>lim</sub></div>
+                        <div class="col-1 col-sm-auto igual">=</div>
+                        <div class="col-6 col-sm-auto" id="p1resxi"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Passo 2: Determinar os esforços resistêntes e momento fletor de cálculo
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionDFNS">
+                <div class="accordion-body">
+                    <strong>Determinação das resistências de cálculo</strong><br />
+                    <div>
+                        <div class="row g-2">
+                            <div class="col-1 col-sm-auto">
+                                f<sub>cd</sub>
+                            </div>
+                            <div class="col-1 col-sm-auto">=</div>
+                            <div class="col-1 col-sm-auto">
+                                <div class="col-6">f<sub>ck</sub></div>
+                                <hr class="hr-aparecer m-0">
+                                <div class="col-6">&#947<sub>c</sub> </div>
+                            </div>
+                            <div class="col-1 col-sm-auto igual"></div>
+                            <div class="col-1 col-sm-auto">
+                                <div class="col-6 col-sm-auto" id="p1fck"></div>
+                                <hr class="hr-aparecer m-0">
+                                <div class="col-6 col-sm-auto" id="p1gamac"></div>
+                            </div>
+                            <div class="col-1 col-sm-auto igual"></div>
+                            <div class="col-4 col-sm-auto" id="fcksobreyc"></div>
+                        </div>
+                        <div class="mt-2">Convertendo de MPa para KN/cm²:</div>
+                        <div class="row g-2 mb-4">
+                            <div class="col-1 col-sm-auto" id="p1fcd"></div>
+                            <div class="col-1 col-sm-auto igual"></div>
+                            <div class="col-4 col-sm-auto" id="fcksobreycsobre10"></div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-1 col-sm-auto" id="p2sigmacd">&#963<sub>cd</sub></div>
+                            <div class="col-1 col-sm-auto igual"> = </div>
+                            <div class="col-3 col-sm-auto"> &#945<sub>c</sub> x f<sub>cd</sub> </div>
+                            <div class="col-1 col-sm-auto igual"></div>
+                            <div class="col-4 col-sm-auto igual" id="alfacxfcd"></div>
+                        </div>
+                        <div class="row g-2 mb-4">
+                            <div class="col-1 col-sm-auto">&#963<sub>cd</sub></div>
+                            <div class="col-1 col-sm-auto igual"> = </div>
+                            <div class="col-4 col-sm-auto" id="p2ressigmacd"></div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-1 col-sm-auto">f<sub>yd</sub></div>
+                            <div class="col-1 col-sm-auto igual"> = </div>
+                            <div class="col-1 col-sm-auto">
+                                <div class="col-12 col-sm-auto">f<sub>yk</sub></div>
+                                <hr class="hr-aparecer m-0">
+                                <div class="col-12 col-sm-auto"> &#947<sub>s</sub></div>
+                            </div>
+                            <div class="col-1 col-sm-auto igual"></div>
+                            <div class="col-1 col-sm-auto" id="p2calcfyd">
+                                <div class="col-12 col-sm-auto" id="p2fyk"></div>
+                                <hr class="hr-aparecer m-0">
+                                <div class="col-12 col-sm-auto" id="p2gamas"></div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-4">
+                            <div class="col-1 col-sm-auto">f<sub>yd</sub></div>
+                            <div class="col-1 col-sm-auto igual"> = </div>
+                            <div class="col-4 col-sm-auto" id="p2resfydsobregamas"></div>
+                        </div>
+                        <strong>Determinação dos esforços solicitantes de cálculo</strong><br />
+                        <div class="row g-2">
+                            <div class="col-1 col-sm-auto">M<sub>d</sub></div>
+                            <div class="col-1 col-sm-auto igual"> = </div>
+                            <div class="col-3 col-sm-auto "> M<sub>k</sub> x &#947<sub>f</sub></div>
+                            <div class="col-1 col-sm-auto igual"> = </div>
+                            <div class="col-4 col-sm-auto" id="p2calcMd"></div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-1 col-sm-auto">M<sub>d</sub></div>
+                            <div class="col-1 col-sm-auto igual">=</div>
+                            <div class="col-3 col-sm-auto " id="resMd"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Passo 3: Descobrir se deve-se utilizar armadura simples ou dupla
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#accordionDFNS">
+                <div class="accordion-body">
+                    <div class="row g-2 text-center mb-2">
+                        <div class="col-1 col-sm-auto">&#181</div>
+                        <div class="col-1 col-sm-auto igual"> = </div>
+                        <div class="col-4 col-sm-auto">
+                            <div class="col-12 col-sm-auto">M<sub>d</sub></div>
+                            <hr class="hr-aparecer m-0">
+                            <div class="col-12 col-sm-auto">b x d² x &#963<sub>cd</sub></div>
+                        </div>
+                        <div class="col-1 col-sm-auto igual"> = </div>
+                        <div class="col-5 col-sm-auto" id="p3calcmi">
+                            <div class="col-12 col-sm-auto" id="p3calcmisup"></div>
+                            <hr class="hr-aparecer m-0">
+                            <div class="col-12 col-sm-auto" id="p3calcmiinf"></div>
+                        </div>
+                    </div>
+                    <div class="row g-2 text-center">
+                        <div class="col-1 col-sm-auto">&#181</div>
+                        <div class="col-1 col-sm-auto igual"> = </div>
+                        <div class="col-2 col-sm-auto" id="p3resmi"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1 col-sm-auto">&#181<sub>lim</sub></div>
+                        <div class="col-1 col-sm-auto igual">=</div>
+                        <div class="col-8 col-sm-auto">&#955 x &#958<sub>lim</sub> x (1-0,5 x &#955 x
+                            &#958<sub>lim</sub>)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1 col-sm-auto">&#181<sub>lim</sub></div>
+                        <div class="col-1 col-sm-auto igual">=</div>
+                        <div class="col-10 col-sm-auto" id="p3calcmilim"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1 col-sm-auto">&#181<sub>lim</sub></div>
+                        <div class="col-1 col-sm-auto igual">=</div>
+                        <div class="col-2 col-sm-auto" id="p3resmilim"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div id="p3res"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button id="buttonP4" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Passo 4: Determinar a(s) área(s) mínima(s) de(as) armadura(s)
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                data-bs-parent="#accordionDFNS">
+                <div class="accordion-body">
+
+                    <div class="row">
+                        <div class="col-1 col-sm-auto" id="info4_1"></div>
+                        <div class="col-1 col-sm-auto igual"></div>
+                        <div class="col-5 col-sm-auto text-center" id="info4_1_3">
+                            <div class="col-12 col-sm-auto text-center" id="info4_1_3_1"></div>
+                            <hr class="hr-aparecer m-0">
+                            <div class="col-12 col-sm-auto text-center" id="info4_1_3_2"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-1 col-sm-auto" id="info4_2"></div>
+                            <div class="col-1 col-sm-auto igual"></div>
+                            <div class="col-1 col-sm-auto" id="info4_2_1"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-1 col-sm-auto" id="info4_3"></div>
+                            <div class="col-1 col-sm-auto igual"></div>
+
+                            <div class="col-5 col-sm-auto" id="info4_3_1">
+                                <div>
+                                    <div class="col-12 col-sm-auto text-center" id="info4_3_1_1"></div>
+                                    <hr class="hr-aparecer m-0">
+                                    <div class="col-12 col-sm-auto text-center" id="info4_3_3_2"></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-1 col-sm-auto" id="info4_4"></div>
+                            <div class="col-1 col-sm-auto igual"></div>
+                            <div class="col-5 col-sm-auto">
+                                <div>
+                                    <div class="col-1 col-sm-auto" id="info4_4_1_1"></div>
+                                    <hr class="hr-aparecer m-0">
+                                    <div class=" col-sm-auto text-center" id="info4_4_1_2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-1 col-sm-auto" id="info4_5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../../bootstrap/bootstrap.js"></script>
+</body>
+
+</html>
