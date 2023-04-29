@@ -1,4 +1,3 @@
-let infosNumero = []
 function dimensionar() {
 
     reset(); //Reseta os gráficos caso não seja a primeira vez que o usuário aperta no calcular
@@ -8,11 +7,7 @@ function dimensionar() {
         desenhoinicial();
     }
 
-    const infos = document.querySelectorAll('.info')
-    infosNumero = []
-    infos.forEach(pegarValue)
-
-    let [h, b, d, fck, fyk, E, gamac, gamas, gamaf, amk, beta] = infosNumero
+    let [h, b, d, fck, fyk, E, gamac, gamas, gamaf, amk, beta] = pegarInputs().map(el => pegarValues(el))
 
     if (fck <= 50) {
         var alamb = 0.8;
@@ -451,36 +446,4 @@ function dimensionar() {
     }
 
     window.api.dadosRotinaPrincipal(dadoPrincipal);
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function pegarValue(element) {
-    infosNumero.push(Number(element.value))
 }
