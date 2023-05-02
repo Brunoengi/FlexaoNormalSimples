@@ -164,6 +164,13 @@ function dimensionar() {
         console.log("Não foi utilizado aço CA-50 nem CA-60, o aço utilizado foi: " + fyk)
     }
 
+    //Escrevendo o domínio 
+    document.getElementById('resDominio').innerHTML = "Domínio: " + dominio;
+
+    //Resultante de tração
+    let resTracao = aas * fyd / 10; //Divide por 10 para deixar em kN
+
+
     //refazendo o segundo desenho com as deformações ultimas e de escoamento do aço e do concreto
     apagar(ctx2)
 
@@ -187,47 +194,12 @@ function dimensionar() {
     escreverLinhaDeformacao(ctx2, epc, eps)
 
     //escrevendo LN
-    ctx1.font = "bold 12px Arial";
-    ctx1.fillStyle = 'white'
-    ctx1.fillText(`L.N.`, -145, 75 + ((230 * Math.min(xa, xlim)) / h));
+    desenharLN(ctx1, xa, xlim, h)
 
-    //Escrevendo o domínio 
-    document.getElementById('resDominio').innerHTML = "Domínio: " + dominio;
-
-    //Fazendo as setas e escrevendo as forças no desenho 3
-    ctx3.beginPath();
-    ctx3.strokeStyle = '#ffa500';
-    ctx3.lineWidth = "2";
-    ctx3.setLineDash([]);
-
-    //Criando a seta de cima - Desenho 3
-    ctx3.moveTo(40, 80 + alamb * (230 * Math.min(xa, xlim)) / (2 * h))
-    ctx3.lineTo(-20, 80 + alamb * (230 * Math.min(xa, xlim)) / (2 * h));
-    ctx3.lineTo(-15, 85 + alamb * (230 * Math.min(xa, xlim)) / (2 * h))
-    ctx3.moveTo(-20, 80 + alamb * (230 * Math.min(xa, xlim)) / (2 * h));
-    ctx3.lineTo(-15, 75 + alamb * (230 * Math.min(xa, xlim)) / (2 * h))
-    ctx3.stroke();
-
-    //Resultante de tração
-    resTracao = aas * fyd / 10; //Divide por 10 para deixar em kN
-
-    //Fazendo a representação da armadura no desenho 3 e colocando a resultante
-    ctx3.beginPath();
-    ctx3.lineWidth = "2";
-    ctx3.strokeStyle = '#FF6464';
-    ctx3.fillStyle = '#FF6464';
-    ctx3.fillRect(-20, 287, -40, 5);
-    ctx3.moveTo(-20, 289);
-    ctx3.lineTo(40, 289);
-    ctx3.lineTo(35, 284);
-    ctx3.moveTo(40, 289);
-    ctx3.lineTo(35, 293);
-    ctx3.font = "bold 12px Arial";
-    ctx3.fillText(resTracao.toFixed(2) + " kN", 45, 294);
-    ctx3.stroke();
+    //desenhando as setas referente ao desenho 3 das resultntes
+    desenhoSeta(ctx3, alamb, xa, xlim, h, resTracao)
 
     //Escrevendo a resultante de compressão
-
     if (asl == 0) {
         resCompressao = resTracao;
     }

@@ -237,3 +237,43 @@ function escreverLinhaDeformacao(ctx2, epc, eps){
     ctx2.fillText((eps*1000).toFixed(2)+'‰',-120,280);
     ctx2.stroke();
 }
+
+function desenharLN(ctx1, xa, xlim, h){
+    ctx1.font = "bold 12px Arial";
+    ctx1.fillStyle = 'white'
+    ctx1.fillText(`L.N.`, -145, 75 + ((230 * Math.min(xa, xlim)) / h));
+}
+
+function desenhoSeta(ctx3, alamb, xa, xlim, h, resTracao){
+    //Fazendo as setas e escrevendo as forças no desenho 3
+    ctx3.beginPath();
+    ctx3.strokeStyle = '#ffa500';
+    ctx3.lineWidth = "2";
+    ctx3.setLineDash([]);
+
+    //Criando a seta de cima - Desenho 3
+    ctx3.moveTo(40, 80 + alamb * (230 * Math.min(xa, xlim)) / (2 * h))
+    ctx3.lineTo(-20, 80 + alamb * (230 * Math.min(xa, xlim)) / (2 * h));
+    ctx3.lineTo(-15, 85 + alamb * (230 * Math.min(xa, xlim)) / (2 * h))
+    ctx3.moveTo(-20, 80 + alamb * (230 * Math.min(xa, xlim)) / (2 * h));
+    ctx3.lineTo(-15, 75 + alamb * (230 * Math.min(xa, xlim)) / (2 * h))
+    ctx3.stroke();
+
+    
+
+    //Fazendo a representação da armadura no desenho 3 e colocando a resultante
+    ctx3.beginPath();
+    ctx3.lineWidth = "2";
+    ctx3.strokeStyle = '#FF6464';
+    ctx3.fillStyle = '#FF6464';
+    ctx3.fillRect(-20, 287, -40, 5);
+    ctx3.moveTo(-20, 289);
+    ctx3.lineTo(40, 289);
+    ctx3.lineTo(35, 284);
+    ctx3.moveTo(40, 289);
+    ctx3.lineTo(35, 293);
+    ctx3.font = "bold 12px Arial";
+    ctx3.fillText(resTracao.toFixed(2) + " kN", 45, 294);
+    ctx3.stroke();
+
+}
